@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "wro-fe-2025",
+			"path": "."
+		},
+		{
+			"name": "main",
+			"path": "src/main"
+		},
+		{
+			"name": "camera",
+			"path": "src/camera"
+		},
+		{
+			"name": "navigation",
+			"path": "src/navigation"
+		}
+	],
+	"settings": {}
+}

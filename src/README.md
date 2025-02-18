@@ -1,6 +1,8 @@
-Control software
-====
+# Codebase
+All code is written in C++ with PlatformIO.
 
-This directory must contain code for control software which is used by the vehicle to participate in the competition and which was developed by the participants.
+## Main
 
-All artifacts required to resolve dependencies and build the project must be included in this directory as well.
+## Navigation
+
+## Camera
