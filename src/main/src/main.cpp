@@ -25,10 +25,10 @@ void loop() {
     if ((millis() - lastDebounceTime) > debounceDelay) {
         if (reading != buttonState) {
             buttonState = reading;
-            if (buttonState == LOW) {             
-                ledState = !ledState;            // Toggle LED state
+            if (buttonState == LOW) {
+                ledState = !ledState;
                 digitalWrite(LED_PIN, ledState ? LOW : HIGH);
-                Serial.print("Button clicked. LED is now ");
+                Serial.print("LED:");
                 Serial.println(ledState ? "ON" : "OFF");
             }
         }
