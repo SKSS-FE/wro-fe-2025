@@ -14,6 +14,7 @@ AsyncEventSource events("/events");
 static bool ledState = false; // LED state
 static bool mainBooted = false; // Main board boot status
 static bool navigationBooted = false; // Navigation board boot status
+static float lastDistance = -1.0; // Last received distance
 
 void setup() {
     pinMode(LED_PIN, OUTPUT);
@@ -43,10 +44,15 @@ void setup() {
         html += "<h1>LED is <span id='ledstate'>" + String(ledState ? "ON" : "OFF") + "</span></h1>";
         html += "<h2>Navigation Board: <span id='navboot'>" + String(navigationBooted ? "BOOTED" : "NOT READY") + "</span></h2>";
         html += "<h2>Main Board: <span id='mainboot'>" + String(mainBooted ? "BOOTED" : "NOT READY") + "</span></h2>";
+        html += "<h2>Distance: <span id='distance'>";
+        if (lastDistance >= 0) html += String(lastDistance, 2) + " cm";
+        else html += "N/A";
+        html += "</span></h2>";
         html += "<script>\n";
         html += "var es = new EventSource('/events');\n";
         html += "es.addEventListener('led', function(e) { document.getElementById('ledstate').textContent = e.data; });\n";
         html += "es.addEventListener('mainboot', function(e) { document.getElementById('mainboot').textContent = e.data; });\n";
+        html += "es.addEventListener('distance', function(e) { document.getElementById('distance').textContent = e.data + ' cm'; });\n";
         html += "</script>";
         html += "</body></html>";
         request->send(200, "text/html", html);
@@ -71,14 +77,25 @@ void loop() {
                     }
                 }
                 // LED status
-                else if (uartBuffer == "0" && !ledState) {
-                    ledState = true;
-                    digitalWrite(LED_PIN, LOW);
-                    events.send("ON", "led");
-                } else if (uartBuffer == "1" && ledState) {
-                    ledState = false;
-                    digitalWrite(LED_PIN, HIGH);
-                    events.send("OFF", "led");
+                else if (uartBuffer.startsWith("LED:")) {
+                    String ledMsg = uartBuffer.substring(4);
+                    bool newLedState = (ledMsg == "ON");
+                    if (ledState != newLedState) {
+                        ledState = newLedState;
+                        digitalWrite(LED_PIN, ledState ? LOW : HIGH);
+                        events.send(ledState ? "ON" : "OFF", "led");
+                    }
+                }
+                // Distance data
+                else if (uartBuffer.startsWith("DIST:")) {
+                    if (uartBuffer == "DIST:timeout") {
+                        lastDistance = -1.0;
+                        events.send("timeout", "distance");
+                    } else {
+                        float dist = uartBuffer.substring(5).toFloat();
+                        lastDistance = dist;
+                        events.send(String(dist, 2).c_str(), "distance");
+                    }
                 }
                 uartBuffer = "";
             }
