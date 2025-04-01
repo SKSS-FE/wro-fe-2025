@@ -8,7 +8,8 @@ void setup() {
     digitalWrite(LED_PIN, HIGH); // LED off (inverted logic)
 
     Serial.begin(9600);
-    Serial.println("Setup complete. Press the button to toggle the LED.");
+    Serial.println("");
+    Serial.println("BOOT_OK");
 }
 
 void loop() {
@@ -28,8 +29,7 @@ void loop() {
             if (buttonState == LOW) {
                 ledState = !ledState;
                 digitalWrite(LED_PIN, ledState ? LOW : HIGH);
-                Serial.print("LED:");
-                Serial.println(ledState ? "ON" : "OFF");
+                Serial.println(ledState ? "0" : "1");
             }
         }
     }
