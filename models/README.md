@@ -1,6 +1,18 @@
 # 3D Models
 Our vehicle primarily uses custom 3D-printed components.
 
+## Mechanic Gear
+
+## Differential
+
+The 3D model includes five gear and a holder.
+
+![image of differential](./differential.png)
+**Size:** 35 x 42 x 42 mm
+**Hole diameters:** 3.5mm
+**Gear teeth:** 18 (Small), 32 (Motor), 40 (Holder)
+
+
 ## Testing Item
 
 ### Hole Tester
