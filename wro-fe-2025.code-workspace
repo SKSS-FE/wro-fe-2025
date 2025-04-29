@@ -15,6 +15,10 @@
 		{
 			"name": "navigation",
 			"path": "src/navigation"
+		},
+		{
+			"name": "test",
+			"path": "../PlatformIO/Projects/test"
 		}
 	],
 	"settings": {}
