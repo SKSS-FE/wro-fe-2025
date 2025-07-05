@@ -132,7 +132,7 @@ void loop() {
                 click = !click;
                 ledState = click;
                 if (click) {
-                    setMotor(MOTOR_BACKWARD, 255); // Start motor at 50% speed, negative direction
+                    setMotor(MOTOR_FORWARD, 190); // Start motor at 50% speed, negative direction
                 } else {
                     setMotor(MOTOR_STOP, 0); // Stop motor
                 }
